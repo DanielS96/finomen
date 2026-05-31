@@ -7,20 +7,77 @@
     <!-- Google Fonts + Font Awesome 6 -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Chart.js + lightweight library for better responsiveness -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.1s ease;
         }
 
+        /* DARK THEME (default) */
         body {
-            background-color: #F8FAFF;
+            background-color: #11151E;
             font-family: 'Inter', sans-serif;
-            color: #1A2C3E;
+            color: #EFF3FC;
             line-height: 1.4;
+        }
+
+        /* light theme class */
+        body.light-theme {
+            background-color: #F5F7FC;
+            color: #1A2C3E;
+        }
+
+        body.light-theme .section-card,
+        body.light-theme .info-panel,
+        body.light-theme .key-metrics,
+        body.light-theme .strat-mini-card,
+        body.light-theme .asset-rows {
+            background: #FFFFFF;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 0 0 1px rgba(0,0,0,0.03);
+            border-color: #E2E9F2;
+        }
+
+        body.light-theme .fund-header {
+            border-bottom-color: #E2E9F2;
+        }
+
+        body.light-theme .metric-block .value {
+            color: #1F6392;
+        }
+
+        body.light-theme .logo-area h1 {
+            background: linear-gradient(130deg, #0F2B3D, #1A4A6F);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        body.light-theme .pillar,
+        body.light-theme .footnote,
+        body.light-theme .asset-name-icon {
+            color: #4A627A;
+        }
+
+        body.light-theme .strat-numbers,
+        body.light-theme .stat-line {
+            color: #2C5A7A;
+        }
+
+        body.light-theme .apr-value {
+            color: #259073;
+        }
+
+        body.light-theme .micro-bar {
+            background: #E2EAF2;
+        }
+
+        body.light-theme .theme-toggle {
+            background: #E9EFF4;
+            color: #1F6392;
         }
 
         /* main container */
@@ -30,7 +87,7 @@
             padding: 1.8rem 1.5rem;
         }
 
-        /* ----- TILDA-INSPIRED HEADER (clean, minimal) ----- */
+        /* Header */
         .fund-header {
             display: flex;
             flex-wrap: wrap;
@@ -38,57 +95,89 @@
             align-items: flex-end;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
-            border-bottom: 2px solid #E2E9F2;
+            border-bottom: 2px solid #2A3548;
         }
+
         .logo-area h1 {
             font-size: 1.9rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(130deg, #0F2B3D, #1A4A6F);
+            background: linear-gradient(130deg, #EFF3FC, #7AA9FF);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
-        .logo-area .pillar {
+
+        .pillar {
             font-size: 0.75rem;
             font-weight: 500;
-            color: #5A7A9A;
+            color: #8FABE6;
             margin-top: 6px;
             letter-spacing: 0.3px;
         }
+
         .key-metrics {
             display: flex;
             gap: 1.8rem;
-            background: #FFFFFF;
+            background: #1E283C;
             padding: 0.6rem 1.5rem;
             border-radius: 60px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-            border: 1px solid #E9EFF4;
+            border: 1px solid #2A3A50;
         }
+
         .metric-block {
             text-align: center;
         }
+
         .metric-block .label {
             font-size: 0.7rem;
             text-transform: uppercase;
             font-weight: 600;
-            color: #6C8DB0;
+            color: #9BB2E0;
         }
+
         .metric-block .value {
             font-size: 1.35rem;
             font-weight: 800;
-            color: #1F6392;
+            color: #7AA9FF;
         }
 
-        /* ------ Cards & grids (modern, soft shadows) ------ */
+        /* theme toggle button */
+        .theme-toggle {
+            background: #1E283C;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            color: #EFF3FC;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: 0.2s;
+            margin-left: 1rem;
+        }
+
+        .theme-toggle:hover {
+            background: #2A3A54;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Cards */
         .section-card {
-            background: #FFFFFF;
+            background: #141C2C;
             border-radius: 28px;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.03), 0 0 0 1px rgba(0,0,0,0.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
             padding: 1.6rem;
             margin-bottom: 2rem;
-            transition: all 0.2s ease;
+            border: 1px solid #253153;
         }
+
         .section-title {
             font-size: 1.25rem;
             font-weight: 700;
@@ -96,42 +185,45 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #1A3B4F;
-        }
-        .section-title i {
-            color: #2D7F9E;
-            font-size: 1.3rem;
+            color: #EFF3FC;
         }
 
-        /* two column layout for global allocation */
+        .section-title i {
+            color: #7AA9FF;
+        }
+
         .split-layout {
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
             align-items: center;
         }
+
         .chart-area {
             flex: 1.2;
             min-width: 200px;
         }
+
         .legend-stats-grid {
             flex: 1;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
             gap: 1rem;
         }
+
         .strat-mini-card {
-            background: #F9FCFE;
+            background: #0F1628;
             border-radius: 20px;
             padding: 0.8rem 1rem;
             border-left: 4px solid;
             transition: 0.2s;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
+
         .strat-name {
             font-weight: 700;
             font-size: 0.9rem;
         }
+
         .strat-numbers {
             display: flex;
             justify-content: space-between;
@@ -139,27 +231,31 @@
             font-size: 0.75rem;
             font-weight: 500;
         }
+
         .apr-value {
-            color: #259073;
+            color: #2DD4BF;
             font-weight: 800;
         }
 
-        /* internal assets (LP V3 breakdown) */
+        /* internal assets */
         .internal-wrapper {
             display: flex;
             flex-wrap: wrap;
             gap: 1.8rem;
         }
+
         .hbar-container {
             flex: 1.5;
             min-width: 240px;
         }
+
         .asset-rows {
             flex: 1;
-            background: #F9FCFE;
+            background: #0F1628;
             border-radius: 24px;
             padding: 1rem;
         }
+
         .asset-row-item {
             display: flex;
             justify-content: space-between;
@@ -169,46 +265,51 @@
             flex-wrap: wrap;
             gap: 8px;
         }
+
         .asset-name-icon {
             display: flex;
             align-items: center;
             gap: 8px;
             font-weight: 500;
         }
+
         .micro-bar {
             width: 110px;
             height: 6px;
-            background: #E2EAF2;
+            background: #222E44;
             border-radius: 8px;
             overflow: hidden;
         }
+
         .micro-fill {
             height: 100%;
-            background: #2D7F9E;
+            background: #7AA9FF;
             border-radius: 8px;
             width: 0%;
         }
 
-        /* KPI row */
+        /* KPI panels */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.5rem;
             margin-top: 0.5rem;
         }
+
         .info-panel {
-            background: #FFFFFF;
+            background: #141C2C;
             border-radius: 24px;
             padding: 1.2rem 1.4rem;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
-            border: 1px solid #ECF3F8;
+            border: 1px solid #253153;
         }
+
         .info-panel h4 {
             font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: #2C5A7A;
+            color: #B9D0FF;
         }
+
         .stat-line {
             display: flex;
             justify-content: space-between;
@@ -223,14 +324,14 @@
 
         .footnote {
             font-size: 0.7rem;
-            color: #889EB0;
+            color: #8A99C4;
             text-align: center;
             margin-top: 1rem;
-            border-top: 1px solid #E9F0F5;
+            border-top: 1px solid #253153;
             padding-top: 1rem;
         }
 
-        /* mobile optimizations */
+        /* mobile */
         @media (max-width: 720px) {
             .dashboard {
                 padding: 1rem;
@@ -256,43 +357,42 @@
             .metric-block .value {
                 font-size: 1.1rem;
             }
-            .strat-mini-card {
-                padding: 0.7rem;
-            }
         }
-        @media (max-width: 480px) {
-            .legend-stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .asset-row-item {
-                flex-wrap: wrap;
-            }
-        }
-        button, a {
-            cursor: default;
-        }
+
         .highlight {
             font-weight: 800;
-            color: #1F6392;
+            color: #2DD4BF;
+        }
+
+        .best-strategy-badge {
+            background: rgba(45,212,191,0.15);
+            border-radius: 24px;
+            padding: 2px 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+            color: #2DD4BF;
         }
     </style>
 </head>
 <body>
 <div class="dashboard">
-    <!-- Header inspired by finmen.tilda.ws/en (clean, authoritative) -->
     <div class="fund-header">
         <div class="logo-area">
             <h1>FINØMEN <span style="font-weight:400;">| Hedge Fund</span></h1>
             <div class="pillar">Absolute transparency · Capital protection · Stable yield 15-45%</div>
         </div>
-        <div class="key-metrics">
-            <div class="metric-block"><div class="label">AVG APR</div><div class="value">25%</div></div>
-            <div class="metric-block"><div class="label">LOAN/ASSET</div><div class="value">15%</div></div>
-            <div class="metric-block"><div class="label">STRATEGIES</div><div class="value">5</div></div>
+        <div class="header-controls">
+            <div class="key-metrics">
+                <div class="metric-block"><div class="label">AVG APR</div><div class="value">25%</div></div>
+                <div class="metric-block"><div class="label">LOAN/ASSET</div><div class="value">15%</div></div>
+                <div class="metric-block"><div class="label">STRATEGIES</div><div class="value">5</div></div>
+            </div>
+            <button class="theme-toggle" id="darkModeToggle"><i class="fas fa-moon"></i> Light mode</button>
         </div>
     </div>
 
-    <!-- GLOBAL ALLOCATION (5 main strategies) -->
+    <!-- GLOBAL ALLOCATION -->
     <div class="section-card">
         <div class="section-title">
             <i class="fas fa-chart-pie"></i> 
@@ -303,49 +403,38 @@
                 <canvas id="globalDonutCanvas" width="400" height="220" style="max-height: 220px;"></canvas>
                 <div class="footnote" style="margin-top: 8px;">% of total fund capital per strategy</div>
             </div>
-            <div class="legend-stats-grid" id="strategiesDynamicList">
-                <!-- injected via JS -->
-            </div>
+            <div class="legend-stats-grid" id="strategiesDynamicList"></div>
         </div>
     </div>
 
-    <!-- INTERNAL BREAKDOWN: LIQUIDITY PROVIDING V3 (8 assets) -->
+    <!-- LP V3 internal breakdown (updated weights) -->
     <div class="section-card">
         <div class="section-title">
             <i class="fas fa-diagram-project"></i>
             <span>Liquidity Providing V3 — internal asset allocation</span>
-            <span style="font-size:0.7rem; background:#EFF3F8; padding:3px 10px; border-radius:40px;">20% of fund capital</span>
         </div>
         <div class="internal-wrapper">
             <div class="hbar-container">
                 <canvas id="horizontalSubChartInternal" width="400" height="210" style="max-height: 210px;"></canvas>
                 <div class="footnote">weight within LP V3 strategy (%)</div>
             </div>
-            <div class="asset-rows" id="assetRowsList">
-                <!-- dynamic asset list with micro bars -->
-            </div>
+            <div class="asset-rows" id="assetRowsList"></div>
         </div>
     </div>
 
-    <!-- KPI + weighted metrics + risk (transparent approach) -->
+    <!-- KPI + Weighted metrics -->
     <div class="kpi-grid">
         <div class="info-panel">
             <h4><i class="fas fa-charging-station"></i> Weighted performance</h4>
-            <div id="weightedMetricsContainer">
-                <!-- dynamic: weighted APR, best/worst -->
-            </div>
+            <div id="weightedMetricsContainer"></div>
         </div>
         <div class="info-panel">
             <h4><i class="fas fa-shield-alt"></i> Risk & reserves</h4>
-            <div id="riskMetricsContainer">
-                <!-- loan-to-asset, sharpe, etc -->
-            </div>
+            <div id="riskMetricsContainer"></div>
         </div>
         <div class="info-panel">
             <h4><i class="fas fa-coins"></i> Factsheet</h4>
-            <div id="factsheetContainer">
-                <!-- additional metrics from finmen style -->
-            </div>
+            <div id="factsheetContainer"></div>
         </div>
     </div>
     <div class="footnote">
@@ -354,10 +443,8 @@
 </div>
 
 <script>
-    // --------------------------------------------
-    // GLOBAL STRATEGIES (data according to user: 5 directions)
-    // allocation = 20% each, APR accordingly
-    // --------------------------------------------
+    // ======================= DATA =========================
+    // Global strategies (20% each, APRs)
     const globalStrats = [
         { name: "Liquidity Providing V3",    allocation: 20, apr: 30, color: "#2D7F9E", icon: "fas fa-water" },
         { name: "LP Perp Dexes (Stable)",   allocation: 20, apr: 15, color: "#53B9A4", icon: "fas fa-chart-line" },
@@ -366,13 +453,11 @@
         { name: "Delta-Neutral Strategies", allocation: 20, apr: 30, color: "#8B6BB0", icon: "fas fa-balance-scale" }
     ];
 
-    // --------------------------------------------
-    // SUB-ASSETS for Liquidity Providing V3 (based on provided: BTC 7%, ETH 3%, XAUT 2%, SP500 2%, QQQ 2%, Stocks 2%, SOL 1%, BNB 1%)
-    // total weight sum = 20 (represents 20% of fund). For internal chart we show distribution inside LP V3 = (weight/20)*100%
-    // --------------------------------------------
+    // LP V3 internal assets (updated weights: BTC 6%, ETH 4%, XAUT 2%, SP500 2%, QQQ 2%, Stocks 2%, SOL 1%, BNB 1%)
+    // Total weight sum = 20% of fund, but for internal chart we show relative share inside LP V3 = (weight / 20) * 100
     const lpSubAssetsRaw = [
-        { name: "Bitcoin (BTC)",    weight: 7, icon: "fab fa-bitcoin" },
-        { name: "Ethereum (ETH)",   weight: 3, icon: "fab fa-ethereum" },
+        { name: "Bitcoin (BTC)",    weight: 6, icon: "fab fa-bitcoin" },
+        { name: "Ethereum (ETH)",   weight: 4, icon: "fab fa-ethereum" },
         { name: "XAUT (Gold)",      weight: 2, icon: "fas fa-coins" },
         { name: "S&P 500",          weight: 2, icon: "fas fa-chart-line" },
         { name: "QQQ (NASDAQ)",     weight: 2, icon: "fas fa-chart-simple" },
@@ -383,12 +468,10 @@
     const totalLpWeight = lpSubAssetsRaw.reduce((s, a) => s + a.weight, 0); // = 20
     const lpSubAssets = lpSubAssetsRaw.map(asset => ({
         ...asset,
-        internalPercent: (asset.weight / totalLpWeight) * 100   // converts to percentage distribution inside the strategy
+        internalPercent: (asset.weight / totalLpWeight) * 100
     }));
 
-    // --------------------------------------------
-    // 1. GLOBAL DONUT CHART (allocation of 5 strategies)
-    // --------------------------------------------
+    // ======================= CHARTS =======================
     let globalDonutChart = null;
     function renderGlobalDonut() {
         const ctx = document.getElementById('globalDonutCanvas').getContext('2d');
@@ -403,11 +486,10 @@
                 datasets: [{
                     data: data,
                     backgroundColor: colors,
-                    borderColor: '#FFFFFF',
+                    borderColor: '#141C2C',
                     borderWidth: 3,
                     borderRadius: 10,
                     cutout: '58%',
-                    hoverOffset: 8
                 }]
             },
             options: {
@@ -421,30 +503,27 @@
         });
     }
 
-    // render legend cards (strat list)
-    function renderStrategyLegendCards() {
+    function renderStrategyCards() {
         const container = document.getElementById('strategiesDynamicList');
         if (!container) return;
         container.innerHTML = '';
         globalStrats.forEach(s => {
+            const isBest = (s.name === "Liquidity Providing V3");
+            const bestBadge = isBest ? '<span class="best-strategy-badge"><i class="fas fa-crown"></i> best</span>' : '';
             const card = document.createElement('div');
             card.className = 'strat-mini-card';
             card.style.borderLeftColor = s.color;
             card.innerHTML = `
-                <div class="strat-name"><i class="${s.icon}" style="margin-right: 6px;"></i> ${s.name}</div>
+                <div class="strat-name"><i class="${s.icon}" style="margin-right: 6px;"></i> ${s.name} ${bestBadge}</div>
                 <div class="strat-numbers">
                     <span><i class="fas fa-percent"></i> Alloc: ${s.allocation}%</span>
                     <span class="apr-value"><i class="fas fa-charging-station"></i> APR ${s.apr}%</span>
                 </div>
-                <div style="font-size:0.7rem; color:#6C8DB0; margin-top:6px;">${s.allocation}% of fund capital</div>
             `;
             container.appendChild(card);
         });
     }
 
-    // --------------------------------------------
-    // 2. HORIZONTAL BAR CHART for LP V3 internal distribution
-    // --------------------------------------------
     let horizChart = null;
     function renderHorizontalSubChart() {
         const ctx = document.getElementById('horizontalSubChartInternal').getContext('2d');
@@ -452,7 +531,6 @@
         const labels = lpSubAssets.map(a => a.name);
         const percentages = lpSubAssets.map(a => a.internalPercent);
         const barColors = ['#2D7F9E', '#53B9A4', '#F0A65A', '#8B6BB0', '#C45C8C', '#4E9F8D', '#F3A683', '#6C9EBF'];
-        
         horizChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -463,7 +541,6 @@
                     backgroundColor: barColors,
                     borderRadius: 10,
                     barPercentage: 0.7,
-                    categoryPercentage: 0.8,
                 }]
             },
             options: {
@@ -472,17 +549,16 @@
                 maintainAspectRatio: true,
                 plugins: {
                     tooltip: { callbacks: { label: (ctx) => `${ctx.raw.toFixed(1)}% of LP V3 allocation` } },
-                    legend: { position: 'top', labels: { font: { size: 10 }, color: '#4A627A' } }
+                    legend: { position: 'top', labels: { font: { size: 10 }, color: '#B9D0FF' } }
                 },
                 scales: {
-                    x: { grid: { color: '#E2EAF2' }, title: { display: true, text: 'Internal share (%)', color: '#5A7A9A' } },
-                    y: { ticks: { font: { size: 9 }, color: '#2C5A7A' }, grid: { display: false } }
+                    x: { grid: { color: '#2A3548' }, title: { display: true, text: 'Internal share (%)', color: '#8FABE6' } },
+                    y: { ticks: { font: { size: 9 }, color: '#B9D0FF' }, grid: { display: false } }
                 }
             }
         });
     }
 
-    // render asset rows with micro-progress bars
     function renderAssetRows() {
         const container = document.getElementById('assetRowsList');
         if (!container) return;
@@ -502,22 +578,12 @@
             `;
             container.appendChild(row);
         });
-        const note = document.createElement('div');
-        note.style.fontSize = '0.7rem';
-        note.style.marginTop = '12px';
-        note.style.color = '#6C8DB0';
-        note.innerHTML = '<i class="fas fa-chart-simple"></i> Total weight = 20% of fund capital · Internal breakdown based on risk parity.';
-        container.appendChild(note);
     }
 
-    // --------------------------------------------
-    // 3. Weighted APR and KPI logic
-    // --------------------------------------------
+    // KPI functions
     function computeWeightedApr() {
         let weighted = 0;
-        globalStrats.forEach(s => {
-            weighted += (s.allocation / 100) * s.apr;
-        });
+        globalStrats.forEach(s => weighted += (s.allocation / 100) * s.apr);
         return weighted;
     }
 
@@ -526,27 +592,23 @@
         const riskDiv = document.getElementById('riskMetricsContainer');
         const factsheetDiv = document.getElementById('factsheetContainer');
         if (!weightedDiv || !riskDiv || !factsheetDiv) return;
-        
-        const weightedApr = computeWeightedApr(); // 25%
-        const bestStrat = globalStrats.reduce((max, s) => s.apr > max.apr ? s : max, globalStrats[0]);
-        const worstStrat = globalStrats.reduce((min, s) => s.apr < min.apr ? s : min, globalStrats[0]);
+        const weightedApr = computeWeightedApr();
+        const bestStrat = globalStrats.find(s => s.name === "Liquidity Providing V3");
         const loanToAsset = 15;
         const riskFree = 3;
         const volatilityMock = 18;
         const sharpeRatio = ((weightedApr - riskFree) / volatilityMock).toFixed(2);
         
         weightedDiv.innerHTML = `
-            <div class="stat-line"><span><i class="fas fa-calculator"></i> Weighted avg APR:</span><span style="font-weight:800; color:#1F6392;">${weightedApr.toFixed(1)}%</span></div>
-            <div class="stat-line"><span><i class="fas fa-trophy"></i> Top strategy:</span><span>${bestStrat.name} (${bestStrat.apr}% APR)</span></div>
+            <div class="stat-line"><span><i class="fas fa-calculator"></i> Weighted avg APR:</span><span class="highlight">${weightedApr.toFixed(1)}%</span></div>
+            <div class="stat-line"><span><i class="fas fa-trophy"></i> Top strategy:</span><span>${bestStrat.name} (${bestStrat.apr}% APR) <i class="fas fa-crown"></i></span></div>
             <div class="stat-line"><span><i class="fas fa-chart-line"></i> Volatility hedge:</span><span>Stable yield corridor</span></div>
         `;
-        
         riskDiv.innerHTML = `
             <div class="stat-line"><span><i class="fas fa-hand-holding-usd"></i> Loan-to-Asset:</span><span>${loanToAsset}%</span></div>
             <div class="stat-line"><span><i class="fas fa-chart-simple"></i> Sharpe ratio (est.):</span><span>${sharpeRatio}</span></div>
             <div class="stat-line"><span><i class="fas fa-shield"></i> Insurance reserve:</span><span>Active</span></div>
         `;
-        
         factsheetDiv.innerHTML = `
             <div class="stat-line"><span><i class="fas fa-coins"></i> Min. capital:</span><span>$30k</span></div>
             <div class="stat-line"><span><i class="fas fa-chart-pie"></i> Strategies total:</span><span>5 active</span></div>
@@ -555,34 +617,55 @@
         `;
     }
 
-    // Additional: show internal LP V3 total capital weight note
-    function addContextNote() {
-        const summaryElement = document.createElement('div');
-        summaryElement.style.marginTop = '1rem';
-        summaryElement.style.fontSize = '0.75rem';
-        summaryElement.style.textAlign = 'center';
-        summaryElement.style.color = '#557C99';
-        summaryElement.innerHTML = '<i class="fas fa-chart-tree"></i> Liquidity Providing V3 diversifies across 8 assets: BTC (7%), ETH (3%), Gold, indices, and altcoins. Remaining 80% of fund: Perp Dexes, Deposits, HFT, Delta-neutral.';
-        document.querySelector('.dashboard').appendChild(summaryElement);
+    // ======================= THEME TOGGLE (dark/light) =======================
+    function setTheme(theme) {
+        const body = document.body;
+        const toggleBtn = document.getElementById('darkModeToggle');
+        if (theme === 'light') {
+            body.classList.add('light-theme');
+            toggleBtn.innerHTML = '<i class="fas fa-sun"></i> Dark mode';
+        } else {
+            body.classList.remove('light-theme');
+            toggleBtn.innerHTML = '<i class="fas fa-moon"></i> Light mode';
+        }
+        localStorage.setItem('finomen_theme', theme);
+        // force charts redraw to adapt grid colors (simplified: just reinit charts to match new theme)
+        if (globalDonutChart) { globalDonutChart.destroy(); renderGlobalDonut(); }
+        if (horizChart) { horizChart.destroy(); renderHorizontalSubChart(); }
+        renderStrategyCards(); // no loss
+        renderAssetRows();
+        renderKPIs();
     }
-    
-    // ensure mobile touch and resize compatibility
+
+    function initTheme() {
+        const savedTheme = localStorage.getItem('finomen_theme');
+        if (savedTheme === 'light') {
+            setTheme('light');
+        } else {
+            setTheme('dark');
+        }
+    }
+
+    // ======================= RESIZE HANDLER =======================
     function handleResize() {
         if (globalDonutChart) globalDonutChart.resize();
         if (horizChart) horizChart.resize();
     }
-    
-    // INIT
+
+    // ======================= INIT ALL =======================
     function initDashboard() {
         renderGlobalDonut();
-        renderStrategyLegendCards();
+        renderStrategyCards();
         renderHorizontalSubChart();
         renderAssetRows();
         renderKPIs();
-        addContextNote();
+        initTheme();
         window.addEventListener('resize', () => handleResize());
+        document.getElementById('darkModeToggle').addEventListener('click', () => {
+            const isLight = document.body.classList.contains('light-theme');
+            setTheme(isLight ? 'dark' : 'light');
+        });
     }
-    
     document.addEventListener('DOMContentLoaded', initDashboard);
 </script>
 </body>
