@@ -14,77 +14,21 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.1s ease;
         }
 
-        /* DARK THEME (default) */
+        /* DARK THEME (fixed, no switcher) */
         body {
-            background-color: #11151E;
+            background-color: #0A0E17;
             font-family: 'Inter', sans-serif;
-            color: #EFF3FC;
+            color: #EDF2FF;
             line-height: 1.4;
-        }
-
-        /* light theme class */
-        body.light-theme {
-            background-color: #F5F7FC;
-            color: #1A2C3E;
-        }
-
-        body.light-theme .section-card,
-        body.light-theme .info-panel,
-        body.light-theme .key-metrics,
-        body.light-theme .strat-mini-card,
-        body.light-theme .asset-rows {
-            background: #FFFFFF;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 0 0 1px rgba(0,0,0,0.03);
-            border-color: #E2E9F2;
-        }
-
-        body.light-theme .fund-header {
-            border-bottom-color: #E2E9F2;
-        }
-
-        body.light-theme .metric-block .value {
-            color: #1F6392;
-        }
-
-        body.light-theme .logo-area h1 {
-            background: linear-gradient(130deg, #0F2B3D, #1A4A6F);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
-        body.light-theme .pillar,
-        body.light-theme .footnote,
-        body.light-theme .asset-name-icon {
-            color: #4A627A;
-        }
-
-        body.light-theme .strat-numbers,
-        body.light-theme .stat-line {
-            color: #2C5A7A;
-        }
-
-        body.light-theme .apr-value {
-            color: #259073;
-        }
-
-        body.light-theme .micro-bar {
-            background: #E2EAF2;
-        }
-
-        body.light-theme .theme-toggle {
-            background: #E9EFF4;
-            color: #1F6392;
         }
 
         /* main container */
         .dashboard {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 1.8rem 1.5rem;
+            padding: 1.5rem 1rem;
         }
 
         /* Header */
@@ -95,21 +39,22 @@
             align-items: flex-end;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
-            border-bottom: 2px solid #2A3548;
+            border-bottom: 2px solid #253153;
+            gap: 1rem;
         }
 
         .logo-area h1 {
-            font-size: 1.9rem;
+            font-size: 1.7rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(130deg, #EFF3FC, #7AA9FF);
+            background: linear-gradient(130deg, #FFFFFF, #7AA9FF, #3B82F6);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
 
         .pillar {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
             color: #8FABE6;
             margin-top: 6px;
@@ -118,10 +63,10 @@
 
         .key-metrics {
             display: flex;
-            gap: 1.8rem;
-            background: #1E283C;
-            padding: 0.6rem 1.5rem;
-            border-radius: 60px;
+            gap: 1.2rem;
+            background: #141C2C;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
             border: 1px solid #2A3A50;
         }
 
@@ -130,72 +75,49 @@
         }
 
         .metric-block .label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             font-weight: 600;
             color: #9BB2E0;
         }
 
         .metric-block .value {
-            font-size: 1.35rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: #7AA9FF;
         }
 
-        /* theme toggle button */
-        .theme-toggle {
-            background: #1E283C;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 40px;
-            color: #EFF3FC;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: 0.2s;
-            margin-left: 1rem;
-        }
-
-        .theme-toggle:hover {
-            background: #2A3A54;
-        }
-
-        .header-controls {
-            display: flex;
-            align-items: center;
-        }
-
         /* Cards */
         .section-card {
-            background: #141C2C;
+            background: #111827;
             border-radius: 28px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-            padding: 1.6rem;
-            margin-bottom: 2rem;
+            padding: 1.3rem;
+            margin-bottom: 1.5rem;
             border: 1px solid #253153;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .section-title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
             color: #EFF3FC;
         }
 
         .section-title i {
             color: #7AA9FF;
+            font-size: 1.2rem;
         }
 
+        /* Two column layout for global allocation */
         .split-layout {
             display: flex;
             flex-wrap: wrap;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
@@ -207,28 +129,33 @@
         .legend-stats-grid {
             flex: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 0.8rem;
         }
 
         .strat-mini-card {
             background: #0F1628;
             border-radius: 20px;
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 0.9rem;
             border-left: 4px solid;
             transition: 0.2s;
         }
 
         .strat-name {
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
         .strat-numbers {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
-            font-size: 0.75rem;
+            margin-top: 8px;
+            font-size: 0.7rem;
             font-weight: 500;
         }
 
@@ -237,16 +164,25 @@
             font-weight: 800;
         }
 
-        /* internal assets */
+        .best-strategy-badge {
+            background: rgba(45,212,191,0.15);
+            border-radius: 20px;
+            padding: 2px 8px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #2DD4BF;
+        }
+
+        /* internal assets - IMPROVED mobile layout */
         .internal-wrapper {
             display: flex;
             flex-wrap: wrap;
-            gap: 1.8rem;
+            gap: 1.5rem;
         }
 
         .hbar-container {
             flex: 1.5;
-            min-width: 240px;
+            min-width: 220px;
         }
 
         .asset-rows {
@@ -256,14 +192,25 @@
             padding: 1rem;
         }
 
+        .asset-list-header {
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #253153;
+            padding-bottom: 0.5rem;
+        }
+
         .asset-row-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 0.9rem;
             font-size: 0.8rem;
+            gap: 10px;
             flex-wrap: wrap;
-            gap: 8px;
         }
 
         .asset-name-icon {
@@ -271,10 +218,25 @@
             align-items: center;
             gap: 8px;
             font-weight: 500;
+            min-width: 110px;
+        }
+
+        .asset-name-icon i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .asset-progress-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 2;
+            min-width: 130px;
+            justify-content: flex-end;
         }
 
         .micro-bar {
-            width: 110px;
+            width: 100px;
             height: 6px;
             background: #222E44;
             border-radius: 8px;
@@ -283,47 +245,58 @@
 
         .micro-fill {
             height: 100%;
-            background: #7AA9FF;
+            background: linear-gradient(90deg, #7AA9FF, #3B82F6);
             border-radius: 8px;
             width: 0%;
         }
 
-        /* KPI panels */
+        .asset-percent-value {
+            font-weight: 700;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* KPI panels - responsive */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            gap: 1rem;
             margin-top: 0.5rem;
         }
 
         .info-panel {
-            background: #141C2C;
+            background: #111827;
             border-radius: 24px;
-            padding: 1.2rem 1.4rem;
+            padding: 1rem 1.2rem;
             border: 1px solid #253153;
         }
 
         .info-panel h4 {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             color: #B9D0FF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .stat-line {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 0.85rem;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
         canvas {
-            max-height: 220px;
+            max-height: 200px;
             width: 100%;
         }
 
         .footnote {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #8A99C4;
             text-align: center;
             margin-top: 1rem;
@@ -331,47 +304,137 @@
             padding-top: 1rem;
         }
 
-        /* mobile */
-        @media (max-width: 720px) {
-            .dashboard {
-                padding: 1rem;
-            }
-            .fund-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            .key-metrics {
-                width: 100%;
-                justify-content: space-around;
-            }
-            .split-layout {
-                flex-direction: column;
-            }
-            .internal-wrapper {
-                flex-direction: column;
-            }
-            .section-card {
-                padding: 1.2rem;
-            }
-            .metric-block .value {
-                font-size: 1.1rem;
-            }
-        }
-
         .highlight {
             font-weight: 800;
             color: #2DD4BF;
         }
 
-        .best-strategy-badge {
-            background: rgba(45,212,191,0.15);
-            border-radius: 24px;
-            padding: 2px 10px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-left: 8px;
-            color: #2DD4BF;
+        /* Mobile specific optimizations */
+        @media (max-width: 680px) {
+            .dashboard {
+                padding: 1rem 0.8rem;
+            }
+            
+            .fund-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.8rem;
+            }
+            
+            .key-metrics {
+                justify-content: space-around;
+                width: 100%;
+                padding: 0.5rem 0.8rem;
+            }
+            
+            .metric-block .value {
+                font-size: 1rem;
+            }
+            
+            .metric-block .label {
+                font-size: 0.6rem;
+            }
+            
+            .section-card {
+                padding: 1rem;
+                border-radius: 24px;
+            }
+            
+            .section-title {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .split-layout {
+                gap: 1rem;
+            }
+            
+            .legend-stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
+            
+            .strat-mini-card {
+                padding: 0.6rem 0.8rem;
+            }
+            
+            .internal-wrapper {
+                gap: 1rem;
+            }
+            
+            .asset-rows {
+                padding: 0.8rem;
+            }
+            
+            .asset-row-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.4rem;
+                margin-bottom: 1rem;
+                padding-bottom: 0.6rem;
+                border-bottom: 1px solid #1E2A3E;
+            }
+            
+            .asset-row-item:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+            
+            .asset-name-icon {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .asset-progress-area {
+                justify-content: space-between;
+                width: 100%;
+                gap: 10px;
+            }
+            
+            .micro-bar {
+                flex: 1;
+                width: auto;
+                max-width: 150px;
+            }
+            
+            .asset-percent-value {
+                min-width: 35px;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .info-panel {
+                padding: 0.8rem 1rem;
+            }
+            
+            .stat-line {
+                font-size: 0.75rem;
+            }
+            
+            .chart-area canvas {
+                max-height: 180px;
+            }
+            
+            .hbar-container canvas {
+                max-height: 180px;
+            }
+        }
+
+        /* For very small devices */
+        @media (max-width: 400px) {
+            .asset-progress-area {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+            
+            .micro-bar {
+                width: 100%;
+                max-width: none;
+            }
         }
     </style>
 </head>
@@ -382,13 +445,10 @@
             <h1>FINØMEN <span style="font-weight:400;">| Hedge Fund</span></h1>
             <div class="pillar">Absolute transparency · Capital protection · Stable yield 15-45%</div>
         </div>
-        <div class="header-controls">
-            <div class="key-metrics">
-                <div class="metric-block"><div class="label">AVG APR</div><div class="value">25%</div></div>
-                <div class="metric-block"><div class="label">LOAN/ASSET</div><div class="value">15%</div></div>
-                <div class="metric-block"><div class="label">STRATEGIES</div><div class="value">5</div></div>
-            </div>
-            <button class="theme-toggle" id="darkModeToggle"><i class="fas fa-moon"></i> Light mode</button>
+        <div class="key-metrics">
+            <div class="metric-block"><div class="label">AVG APR</div><div class="value">25%</div></div>
+            <div class="metric-block"><div class="label">LOAN/ASSET</div><div class="value">15%</div></div>
+            <div class="metric-block"><div class="label">STRATEGIES</div><div class="value">5</div></div>
         </div>
     </div>
 
@@ -401,7 +461,7 @@
         <div class="split-layout">
             <div class="chart-area">
                 <canvas id="globalDonutCanvas" width="400" height="220" style="max-height: 220px;"></canvas>
-                <div class="footnote" style="margin-top: 8px;">% of total fund capital per strategy</div>
+                <div class="footnote" style="margin-top: 6px;">% of total fund capital per strategy</div>
             </div>
             <div class="legend-stats-grid" id="strategiesDynamicList"></div>
         </div>
@@ -454,7 +514,7 @@
     ];
 
     // LP V3 internal assets (updated weights: BTC 6%, ETH 4%, XAUT 2%, SP500 2%, QQQ 2%, Stocks 2%, SOL 1%, BNB 1%)
-    // Total weight sum = 20% of fund, but for internal chart we show relative share inside LP V3 = (weight / 20) * 100
+    // Fixed icons: QQQ -> chart-line, SOL -> bolt (since fab fa-solana sometimes fails, using solid icon)
     const lpSubAssetsRaw = [
         { name: "Bitcoin (BTC)",    weight: 6, icon: "fab fa-bitcoin" },
         { name: "Ethereum (ETH)",   weight: 4, icon: "fab fa-ethereum" },
@@ -462,7 +522,7 @@
         { name: "S&P 500",          weight: 2, icon: "fas fa-chart-line" },
         { name: "QQQ (NASDAQ)",     weight: 2, icon: "fas fa-chart-simple" },
         { name: "Global Stocks",    weight: 2, icon: "fas fa-building" },
-        { name: "Solana (SOL)",     weight: 1, icon: "fab fa-solana" },
+        { name: "Solana (SOL)",     weight: 1, icon: "fas fa-bolt" },
         { name: "BNB",              weight: 1, icon: "fas fa-crown" }
     ];
     const totalLpWeight = lpSubAssetsRaw.reduce((s, a) => s + a.weight, 0); // = 20
@@ -486,7 +546,7 @@
                 datasets: [{
                     data: data,
                     backgroundColor: colors,
-                    borderColor: '#141C2C',
+                    borderColor: '#111827',
                     borderWidth: 3,
                     borderRadius: 10,
                     cutout: '58%',
@@ -514,7 +574,10 @@
             card.className = 'strat-mini-card';
             card.style.borderLeftColor = s.color;
             card.innerHTML = `
-                <div class="strat-name"><i class="${s.icon}" style="margin-right: 6px;"></i> ${s.name} ${bestBadge}</div>
+                <div class="strat-name">
+                    <span><i class="${s.icon}" style="margin-right: 4px;"></i> ${s.name}</span>
+                    ${bestBadge}
+                </div>
                 <div class="strat-numbers">
                     <span><i class="fas fa-percent"></i> Alloc: ${s.allocation}%</span>
                     <span class="apr-value"><i class="fas fa-charging-station"></i> APR ${s.apr}%</span>
@@ -553,7 +616,7 @@
                 },
                 scales: {
                     x: { grid: { color: '#2A3548' }, title: { display: true, text: 'Internal share (%)', color: '#8FABE6' } },
-                    y: { ticks: { font: { size: 9 }, color: '#B9D0FF' }, grid: { display: false } }
+                    y: { ticks: { font: { size: 8 }, color: '#B9D0FF' }, grid: { display: false } }
                 }
             }
         });
@@ -562,18 +625,22 @@
     function renderAssetRows() {
         const container = document.getElementById('assetRowsList');
         if (!container) return;
-        container.innerHTML = '<div style="margin-bottom: 12px; font-weight:600;"><i class="fas fa-layer-group"></i> Weight distribution (8 assets)</div>';
+        container.innerHTML = `
+            <div class="asset-list-header">
+                <i class="fas fa-layer-group"></i> Weight distribution (8 assets)
+            </div>
+        `;
         lpSubAssets.forEach(asset => {
             const percentFormatted = asset.internalPercent.toFixed(1);
             const row = document.createElement('div');
             row.className = 'asset-row-item';
             row.innerHTML = `
                 <div class="asset-name-icon">
-                    <i class="${asset.icon}" style="width: 24px;"></i> ${asset.name}
+                    <i class="${asset.icon}"></i> ${asset.name}
                 </div>
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="asset-progress-area">
                     <div class="micro-bar"><div class="micro-fill" style="width: ${percentFormatted}%;"></div></div>
-                    <span style="font-weight:700;">${percentFormatted}%</span>
+                    <span class="asset-percent-value">${percentFormatted}%</span>
                 </div>
             `;
             container.appendChild(row);
@@ -617,35 +684,6 @@
         `;
     }
 
-    // ======================= THEME TOGGLE (dark/light) =======================
-    function setTheme(theme) {
-        const body = document.body;
-        const toggleBtn = document.getElementById('darkModeToggle');
-        if (theme === 'light') {
-            body.classList.add('light-theme');
-            toggleBtn.innerHTML = '<i class="fas fa-sun"></i> Dark mode';
-        } else {
-            body.classList.remove('light-theme');
-            toggleBtn.innerHTML = '<i class="fas fa-moon"></i> Light mode';
-        }
-        localStorage.setItem('finomen_theme', theme);
-        // force charts redraw to adapt grid colors (simplified: just reinit charts to match new theme)
-        if (globalDonutChart) { globalDonutChart.destroy(); renderGlobalDonut(); }
-        if (horizChart) { horizChart.destroy(); renderHorizontalSubChart(); }
-        renderStrategyCards(); // no loss
-        renderAssetRows();
-        renderKPIs();
-    }
-
-    function initTheme() {
-        const savedTheme = localStorage.getItem('finomen_theme');
-        if (savedTheme === 'light') {
-            setTheme('light');
-        } else {
-            setTheme('dark');
-        }
-    }
-
     // ======================= RESIZE HANDLER =======================
     function handleResize() {
         if (globalDonutChart) globalDonutChart.resize();
@@ -659,12 +697,7 @@
         renderHorizontalSubChart();
         renderAssetRows();
         renderKPIs();
-        initTheme();
         window.addEventListener('resize', () => handleResize());
-        document.getElementById('darkModeToggle').addEventListener('click', () => {
-            const isLight = document.body.classList.contains('light-theme');
-            setTheme(isLight ? 'dark' : 'light');
-        });
     }
     document.addEventListener('DOMContentLoaded', initDashboard);
 </script>
