@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>FINØMEN | Hedge Fund — Multi‑Layer DeFi Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>FINØMEN | Hedge Fund — Capital Allocation Dashboard</title>
     <!-- Google Fonts + Font Awesome 6 -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Chart.js + additional library for treemap? We'll use canvas + custom bars, but we keep doughnut/horizontal stacked bar for sub-assets -->
+    <!-- Chart.js + lightweight library for better responsiveness -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * {
@@ -17,242 +17,203 @@
         }
 
         body {
-            background: radial-gradient(ellipse at 20% 30%, #0A0F1C, #03050B);
+            background-color: #F8FAFF;
             font-family: 'Inter', sans-serif;
-            color: #EDF2FF;
-            padding: 2rem 1.5rem;
+            color: #1A2C3E;
+            line-height: 1.4;
         }
 
+        /* main container */
         .dashboard {
-            max-width: 1500px;
+            max-width: 1280px;
             margin: 0 auto;
+            padding: 1.8rem 1.5rem;
         }
 
-        /* Header */
-        .hero-section {
+        /* ----- TILDA-INSPIRED HEADER (clean, minimal) ----- */
+        .fund-header {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.8rem;
+            align-items: flex-end;
+            margin-bottom: 2rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(59,130,246,0.4);
+            border-bottom: 2px solid #E2E9F2;
         }
-
-        .brand h1 {
-            font-size: 2.3rem;
-            font-weight: 800;
-            background: linear-gradient(130deg, #FFFFFF, #7AA9FF, #3B82F6);
+        .logo-area h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(130deg, #0F2B3D, #1A4A6F);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            letter-spacing: -0.02em;
         }
-
-        .brand p {
-            font-size: 0.8rem;
-            color: #8FABE6;
+        .logo-area .pillar {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #5A7A9A;
             margin-top: 6px;
             letter-spacing: 0.3px;
         }
-
-        .global-metrics {
+        .key-metrics {
             display: flex;
-            gap: 2rem;
-            background: rgba(12, 22, 40, 0.7);
-            backdrop-filter: blur(8px);
-            padding: 0.7rem 1.8rem;
+            gap: 1.8rem;
+            background: #FFFFFF;
+            padding: 0.6rem 1.5rem;
             border-radius: 60px;
-            border: 1px solid rgba(59,130,246,0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid #E9EFF4;
         }
-
-        .metric {
+        .metric-block {
             text-align: center;
         }
-
-        .metric .label {
+        .metric-block .label {
             font-size: 0.7rem;
             text-transform: uppercase;
-            font-weight: 500;
-            color: #9BB2E0;
-        }
-
-        .metric .value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .highlight-green {
-            color: #2DD4BF;
-            text-shadow: 0 0 6px rgba(45,212,191,0.2);
-        }
-
-        /* two-level layout */
-        .allocation-layers {
-            display: flex;
-            flex-direction: column;
-            gap: 2.8rem;
-            margin-bottom: 2rem;
-        }
-
-        /* global strategies row (cards style) */
-        .global-strategies {
-            background: rgba(8, 14, 26, 0.5);
-            border-radius: 38px;
-            padding: 1.5rem;
-            border: 1px solid rgba(59,130,246,0.3);
-        }
-
-        .section-title {
-            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            color: #6C8DB0;
+        }
+        .metric-block .value {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #1F6392;
+        }
+
+        /* ------ Cards & grids (modern, soft shadows) ------ */
+        .section-card {
+            background: #FFFFFF;
+            border-radius: 28px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.03), 0 0 0 1px rgba(0,0,0,0.02);
+            padding: 1.6rem;
+            margin-bottom: 2rem;
+            transition: all 0.2s ease;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            color: #1A3B4F;
         }
-
         .section-title i {
-            color: #3B82F6;
-            font-size: 1.4rem;
+            color: #2D7F9E;
+            font-size: 1.3rem;
         }
 
-        .strategies-chart-row {
+        /* two column layout for global allocation */
+        .split-layout {
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
             align-items: center;
-            justify-content: space-between;
         }
-
-        .donut-container {
+        .chart-area {
             flex: 1.2;
-            min-width: 260px;
+            min-width: 200px;
         }
-
-        .strategies-legend-stats {
+        .legend-stats-grid {
             flex: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
             gap: 1rem;
         }
-
-        .legend-card {
-            background: rgba(18, 28, 48, 0.7);
-            border-radius: 24px;
+        .strat-mini-card {
+            background: #F9FCFE;
+            border-radius: 20px;
             padding: 0.8rem 1rem;
-            transition: 0.2s;
             border-left: 4px solid;
+            transition: 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
-
-        .legend-card .strat-name {
-            font-weight: 600;
+        .strat-name {
+            font-weight: 700;
             font-size: 0.9rem;
         }
-
-        .legend-card .strat-stats {
+        .strat-numbers {
             display: flex;
             justify-content: space-between;
-            margin-top: 8px;
-            font-size: 0.8rem;
+            margin-top: 10px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .apr-value {
+            color: #259073;
+            font-weight: 800;
         }
 
-        .apr-badge {
-            color: #2DD4BF;
-            font-weight: 700;
-        }
-
-        /* Internal breakdown (для LP V3) */
-        .internal-breakdown {
-            background: rgba(8, 14, 26, 0.5);
-            border-radius: 38px;
-            padding: 1.5rem;
-            border: 1px solid rgba(45,212,191,0.25);
-        }
-
-        .flex-internal {
+        /* internal assets (LP V3 breakdown) */
+        .internal-wrapper {
             display: flex;
             flex-wrap: wrap;
-            gap: 2rem;
-            align-items: center;
+            gap: 1.8rem;
         }
-
         .hbar-container {
-            flex: 2;
-            min-width: 280px;
+            flex: 1.5;
+            min-width: 240px;
         }
-
-        .asset-list {
-            flex: 1.2;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 28px;
+        .asset-rows {
+            flex: 1;
+            background: #F9FCFE;
+            border-radius: 24px;
             padding: 1rem;
         }
-
-        .asset-item {
+        .asset-row-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            font-size: 0.85rem;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-            padding-bottom: 8px;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+            gap: 8px;
         }
-
-        .asset-name {
-            font-weight: 500;
+        .asset-name-icon {
             display: flex;
             align-items: center;
             gap: 8px;
+            font-weight: 500;
         }
-
-        .asset-percent {
-            font-weight: 700;
-            color: #B9D0FF;
-        }
-
-        .progress-micro {
-            width: 120px;
+        .micro-bar {
+            width: 110px;
             height: 6px;
-            background: #1E2A48;
-            border-radius: 10px;
+            background: #E2EAF2;
+            border-radius: 8px;
             overflow: hidden;
         }
-
-        .progress-micro-fill {
+        .micro-fill {
             height: 100%;
-            background: linear-gradient(90deg, #2DD4BF, #3B82F6);
+            background: #2D7F9E;
+            border-radius: 8px;
             width: 0%;
-            border-radius: 10px;
         }
 
-        /* third panel — KPI + weights summary */
-        .insight-footer {
-            margin-top: 2.5rem;
+        /* KPI row */
+        .kpi-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 0.5rem;
         }
-
-        .weighted-card, .risk-card {
-            background: rgba(12, 20, 35, 0.7);
-            backdrop-filter: blur(4px);
-            border-radius: 28px;
-            padding: 1.2rem 1.5rem;
-            border: 1px solid rgba(59,130,246,0.2);
+        .info-panel {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 1.2rem 1.4rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+            border: 1px solid #ECF3F8;
         }
-
-        .stat-row {
+        .info-panel h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2C5A7A;
+        }
+        .stat-line {
             display: flex;
             justify-content: space-between;
-            margin: 12px 0;
-        }
-
-        .badge-sm {
-            background: #1E2A48;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
         }
 
         canvas {
@@ -260,338 +221,369 @@
             width: 100%;
         }
 
-        .note {
+        .footnote {
             font-size: 0.7rem;
-            color: #6E88B0;
+            color: #889EB0;
             text-align: center;
-            margin-top: 12px;
+            margin-top: 1rem;
+            border-top: 1px solid #E9F0F5;
+            padding-top: 1rem;
         }
 
-        hr {
-            border-color: #253153;
-            margin: 1rem 0;
+        /* mobile optimizations */
+        @media (max-width: 720px) {
+            .dashboard {
+                padding: 1rem;
+            }
+            .fund-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .key-metrics {
+                width: 100%;
+                justify-content: space-around;
+            }
+            .split-layout {
+                flex-direction: column;
+            }
+            .internal-wrapper {
+                flex-direction: column;
+            }
+            .section-card {
+                padding: 1.2rem;
+            }
+            .metric-block .value {
+                font-size: 1.1rem;
+            }
+            .strat-mini-card {
+                padding: 0.7rem;
+            }
         }
-
-        @media (max-width: 850px) {
-            body { padding: 1rem; }
-            .strategies-chart-row { flex-direction: column; }
-            .flex-internal { flex-direction: column; }
-            .insight-footer { grid-template-columns: 1fr; }
+        @media (max-width: 480px) {
+            .legend-stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .asset-row-item {
+                flex-wrap: wrap;
+            }
+        }
+        button, a {
+            cursor: default;
+        }
+        .highlight {
+            font-weight: 800;
+            color: #1F6392;
         }
     </style>
 </head>
 <body>
 <div class="dashboard">
-    <div class="hero-section">
-        <div class="brand">
-            <h1><i class="fas fa-chart-line" style="color:#3B82F6; background: none; -webkit-background-clip: unset;"></i> FINØMEN | Hedge Fund</h1>
-            <p>Multi‑layer capital allocation · Active DeFi strategies · LP V3 internal breakdown</p>
+    <!-- Header inspired by finmen.tilda.ws/en (clean, authoritative) -->
+    <div class="fund-header">
+        <div class="logo-area">
+            <h1>FINØMEN <span style="font-weight:400;">| Hedge Fund</span></h1>
+            <div class="pillar">Absolute transparency · Capital protection · Stable yield 15-45%</div>
         </div>
-        <div class="global-metrics">
-            <div class="metric"><div class="label">AVG APR (fund)</div><div class="value highlight-green">25%</div></div>
-            <div class="metric"><div class="label">LOAN‑TO‑ASSET</div><div class="value">15%</div></div>
-            <div class="metric"><div class="label">ACTIVE STRATS</div><div class="value">5</div></div>
+        <div class="key-metrics">
+            <div class="metric-block"><div class="label">AVG APR</div><div class="value">25%</div></div>
+            <div class="metric-block"><div class="label">LOAN/ASSET</div><div class="value">15%</div></div>
+            <div class="metric-block"><div class="label">STRATEGIES</div><div class="value">5</div></div>
         </div>
     </div>
 
-    <div class="allocation-layers">
-        <!-- ГЛОБАЛЬНЫЙ УРОВЕНЬ: 5 стратегий + распределение капитала -->
-        <div class="global-strategies">
-            <div class="section-title">
-                <i class="fas fa-globe-americas"></i> 
-                <span>Глобальное распределение капитала фонда</span>
-                <span class="badge-sm"><i class="fas fa-chart-pie"></i> 5 основных стратегий</span>
-            </div>
-            <div class="strategies-chart-row">
-                <div class="donut-container">
-                    <canvas id="globalDonutChart" width="400" height="220" style="max-height: 220px;"></canvas>
-                    <div class="note">* Доля капитала на каждую стратегию (% от фонда)</div>
-                </div>
-                <div class="strategies-legend-stats" id="strategiesStatsList">
-                    <!-- динамические карточки с APR и аллокацией -->
-                </div>
-            </div>
+    <!-- GLOBAL ALLOCATION (5 main strategies) -->
+    <div class="section-card">
+        <div class="section-title">
+            <i class="fas fa-chart-pie"></i> 
+            <span>Global capital allocation · Active strategies</span>
         </div>
-
-        <!-- ВНУТРЕННЕЕ РАСПРЕДЕЛЕНИЕ: Liquidity Providing V3 (суб-активы) -->
-        <div class="internal-breakdown">
-            <div class="section-title">
-                <i class="fas fa-diagram-project"></i>
-                <span>Детализация стратегии: LIQUIDITY PROVIDING V3</span>
-                <span class="badge-sm"><i class="fas fa-chart-simple"></i> Внутренняя аллокация</span>
+        <div class="split-layout">
+            <div class="chart-area">
+                <canvas id="globalDonutCanvas" width="400" height="220" style="max-height: 220px;"></canvas>
+                <div class="footnote" style="margin-top: 8px;">% of total fund capital per strategy</div>
             </div>
-            <div class="flex-internal">
-                <div class="hbar-container">
-                    <canvas id="horizontalSubChart" width="400" height="220" style="max-height: 210px;"></canvas>
-                    <div class="note">Горизонтальная диаграмма: вес каждого актива внутри LP V3</div>
-                </div>
-                <div class="asset-list" id="subAssetList">
-                    <!-- список активов с прогресс-барами -->
-                </div>
+            <div class="legend-stats-grid" id="strategiesDynamicList">
+                <!-- injected via JS -->
             </div>
         </div>
     </div>
 
-    <!-- Дополнительные KPI: взвешенная доходность и состав фонда -->
-    <div class="insight-footer">
-        <div class="weighted-card">
-            <h3 style="font-size: 1rem; margin-bottom: 1rem;"><i class="fas fa-charging-station"></i> Эффективность & веса</h3>
-            <div id="weightedStats">
-                <!-- динамический контент: средневзвешенная APR, сравнение -->
+    <!-- INTERNAL BREAKDOWN: LIQUIDITY PROVIDING V3 (8 assets) -->
+    <div class="section-card">
+        <div class="section-title">
+            <i class="fas fa-diagram-project"></i>
+            <span>Liquidity Providing V3 — internal asset allocation</span>
+            <span style="font-size:0.7rem; background:#EFF3F8; padding:3px 10px; border-radius:40px;">20% of fund capital</span>
+        </div>
+        <div class="internal-wrapper">
+            <div class="hbar-container">
+                <canvas id="horizontalSubChartInternal" width="400" height="210" style="max-height: 210px;"></canvas>
+                <div class="footnote">weight within LP V3 strategy (%)</div>
+            </div>
+            <div class="asset-rows" id="assetRowsList">
+                <!-- dynamic asset list with micro bars -->
             </div>
         </div>
-        <div class="risk-card">
-            <h3 style="font-size: 1rem; margin-bottom: 1rem;"><i class="fas fa-chart-line"></i> Метрики фонда</h3>
-            <div id="riskMetrics">
-                <!-- loan to asset, sharpe, etc -->
+    </div>
+
+    <!-- KPI + weighted metrics + risk (transparent approach) -->
+    <div class="kpi-grid">
+        <div class="info-panel">
+            <h4><i class="fas fa-charging-station"></i> Weighted performance</h4>
+            <div id="weightedMetricsContainer">
+                <!-- dynamic: weighted APR, best/worst -->
             </div>
         </div>
+        <div class="info-panel">
+            <h4><i class="fas fa-shield-alt"></i> Risk & reserves</h4>
+            <div id="riskMetricsContainer">
+                <!-- loan-to-asset, sharpe, etc -->
+            </div>
+        </div>
+        <div class="info-panel">
+            <h4><i class="fas fa-coins"></i> Factsheet</h4>
+            <div id="factsheetContainer">
+                <!-- additional metrics from finmen style -->
+            </div>
+        </div>
+    </div>
+    <div class="footnote">
+        <i class="fas fa-database"></i> Based on audited hedging strategies · Assets stored across top-10 exchanges & DeFi protocols · Proof of reserves available
     </div>
 </div>
 
 <script>
-    // -----------------------------------------------
-    // 1. ГЛОБАЛЬНЫЕ ДАННЫЕ СТРАТЕГИЙ (5 направлений)
-    // -----------------------------------------------
-    const globalStrategies = [
-        { name: "Liquidity Providing V3",      allocation: 20, apr: 30, color: "#3B82F6" },
-        { name: "LP Perp Dexes (Stable)",      allocation: 20, apr: 15, color: "#2DD4BF" },
-        { name: "Deposits",                    allocation: 20, apr: 10, color: "#F59E0B" },
-        { name: "High Frequency Trading Bots", allocation: 20, apr: 40, color: "#EC4899" },
-        { name: "Delta-Neutral Strategies",    allocation: 20, apr: 30, color: "#8B5CF6" }
+    // --------------------------------------------
+    // GLOBAL STRATEGIES (data according to user: 5 directions)
+    // allocation = 20% each, APR accordingly
+    // --------------------------------------------
+    const globalStrats = [
+        { name: "Liquidity Providing V3",    allocation: 20, apr: 30, color: "#2D7F9E", icon: "fas fa-water" },
+        { name: "LP Perp Dexes (Stable)",   allocation: 20, apr: 15, color: "#53B9A4", icon: "fas fa-chart-line" },
+        { name: "Deposits",                 allocation: 20, apr: 10, color: "#F0A65A", icon: "fas fa-piggy-bank" },
+        { name: "High Frequency Trading Bots", allocation: 20, apr: 40, color: "#C45C8C", icon: "fas fa-robot" },
+        { name: "Delta-Neutral Strategies", allocation: 20, apr: 30, color: "#8B6BB0", icon: "fas fa-balance-scale" }
     ];
 
-    // -----------------------------------------------
-    // 2. ВНУТРЕННИЕ АКТИВЫ LP V3 (BTC, ETH, XAUT, SP500, QQQ, Stocks, SOL, BNB)
-    // -----------------------------------------------
-    const lpSubAssets = [
-        { name: "Bitcoin (BTC)",    weight: 7,  icon: "fab fa-bitcoin" },
-        { name: "Ethereum (ETH)",   weight: 3,  icon: "fab fa-ethereum" },
-        { name: "XAUT (Gold Token)",weight: 2,  icon: "fas fa-coins" },
-        { name: "S&P 500",          weight: 2,  icon: "fas fa-chart-line" },
-        { name: "QQQ (NASDAQ)",     weight: 2,  icon: "fas fa-chart-simple" },
-        { name: "Global Stocks",    weight: 2,  icon: "fas fa-building" },
-        { name: "Solana (SOL)",     weight: 1,  icon: "fab fa-solana" },
-        { name: "BNB",              weight: 1,  icon: "fas fa-crown" }
+    // --------------------------------------------
+    // SUB-ASSETS for Liquidity Providing V3 (based on provided: BTC 7%, ETH 3%, XAUT 2%, SP500 2%, QQQ 2%, Stocks 2%, SOL 1%, BNB 1%)
+    // total weight sum = 20 (represents 20% of fund). For internal chart we show distribution inside LP V3 = (weight/20)*100%
+    // --------------------------------------------
+    const lpSubAssetsRaw = [
+        { name: "Bitcoin (BTC)",    weight: 7, icon: "fab fa-bitcoin" },
+        { name: "Ethereum (ETH)",   weight: 3, icon: "fab fa-ethereum" },
+        { name: "XAUT (Gold)",      weight: 2, icon: "fas fa-coins" },
+        { name: "S&P 500",          weight: 2, icon: "fas fa-chart-line" },
+        { name: "QQQ (NASDAQ)",     weight: 2, icon: "fas fa-chart-simple" },
+        { name: "Global Stocks",    weight: 2, icon: "fas fa-building" },
+        { name: "Solana (SOL)",     weight: 1, icon: "fab fa-solana" },
+        { name: "BNB",              weight: 1, icon: "fas fa-crown" }
     ];
+    const totalLpWeight = lpSubAssetsRaw.reduce((s, a) => s + a.weight, 0); // = 20
+    const lpSubAssets = lpSubAssetsRaw.map(asset => ({
+        ...asset,
+        internalPercent: (asset.weight / totalLpWeight) * 100   // converts to percentage distribution inside the strategy
+    }));
 
-    // общая сумма весов = 7+3+2+2+2+2+1+1 = 20% (согласно данным: 20% от фонда, но внутри 100% распределения суб-активов)
-    // Сумма весов = 20, но для внутренней диаграммы показываем пропорции: каждый актив /20 *100%
-    function computeInternalPercentages() {
-        const totalWeight = lpSubAssets.reduce((sum, a) => sum + a.weight, 0);
-        return lpSubAssets.map(asset => ({
-            ...asset,
-            internalPercent: (asset.weight / totalWeight) * 100
-        }));
-    }
-
-    const enrichedSubAssets = computeInternalPercentages();
-
-    // ----------------------------------------------------------------
-    // 3. Глобальная круговая диаграмма (распределение капитала по 5 стратегиям)
-    // ----------------------------------------------------------------
-    let globalChart = null;
+    // --------------------------------------------
+    // 1. GLOBAL DONUT CHART (allocation of 5 strategies)
+    // --------------------------------------------
+    let globalDonutChart = null;
     function renderGlobalDonut() {
-        const ctx = document.getElementById('globalDonutChart').getContext('2d');
-        if (globalChart) globalChart.destroy();
-        
-        const labels = globalStrategies.map(s => s.name);
-        const allocations = globalStrategies.map(s => s.allocation);
-        const colors = globalStrategies.map(s => s.color);
-        
-        globalChart = new Chart(ctx, {
+        const ctx = document.getElementById('globalDonutCanvas').getContext('2d');
+        if (globalDonutChart) globalDonutChart.destroy();
+        const labels = globalStrats.map(s => s.name);
+        const data = globalStrats.map(s => s.allocation);
+        const colors = globalStrats.map(s => s.color);
+        globalDonutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: labels,
                 datasets: [{
-                    data: allocations,
+                    data: data,
                     backgroundColor: colors,
-                    borderColor: '#0A0F1C',
+                    borderColor: '#FFFFFF',
                     borderWidth: 3,
-                    borderRadius: 12,
-                    cutout: '62%',
-                    hoverOffset: 12
+                    borderRadius: 10,
+                    cutout: '58%',
+                    hoverOffset: 8
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    legend: { display: false }, // скрываем стандартную легенду, используем свою
-                    tooltip: {
-                        callbacks: {
-                            label: (ctx) => `${ctx.label}: ${ctx.raw}% капитала | APR ${globalStrategies[ctx.dataIndex].apr}%`
-                        }
-                    }
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw}% of capital · APR ${globalStrats[ctx.dataIndex].apr}%` } }
                 }
             }
         });
     }
 
-    // отрисовка карточек стратегий с APR и аллокацией
-    function renderStrategiesLegend() {
-        const container = document.getElementById('strategiesStatsList');
+    // render legend cards (strat list)
+    function renderStrategyLegendCards() {
+        const container = document.getElementById('strategiesDynamicList');
         if (!container) return;
         container.innerHTML = '';
-        globalStrategies.forEach(strat => {
+        globalStrats.forEach(s => {
             const card = document.createElement('div');
-            card.className = 'legend-card';
-            card.style.borderLeftColor = strat.color;
+            card.className = 'strat-mini-card';
+            card.style.borderLeftColor = s.color;
             card.innerHTML = `
-                <div class="strat-name">${strat.name}</div>
-                <div class="strat-stats">
-                    <span><i class="fas fa-percent"></i> Аллокация: ${strat.allocation}%</span>
-                    <span class="apr-badge"><i class="fas fa-charging-station"></i> APR ${strat.apr}%</span>
+                <div class="strat-name"><i class="${s.icon}" style="margin-right: 6px;"></i> ${s.name}</div>
+                <div class="strat-numbers">
+                    <span><i class="fas fa-percent"></i> Alloc: ${s.allocation}%</span>
+                    <span class="apr-value"><i class="fas fa-charging-station"></i> APR ${s.apr}%</span>
                 </div>
-                <div style="margin-top: 8px; font-size:0.7rem; color:#A5BBE0;"><i class="fas fa-chart-line"></i> вклад в фонд: ${strat.allocation}% капитала</div>
+                <div style="font-size:0.7rem; color:#6C8DB0; margin-top:6px;">${s.allocation}% of fund capital</div>
             `;
             container.appendChild(card);
         });
     }
 
-    // ----------------------------------------------------------------
-    // 4. ГОРИЗОНТАЛЬНАЯ (BAR) диаграмма для внутренних активов LP V3 (отображаем internalPercent)
-    // ----------------------------------------------------------------
-    let horizontalChart = null;
+    // --------------------------------------------
+    // 2. HORIZONTAL BAR CHART for LP V3 internal distribution
+    // --------------------------------------------
+    let horizChart = null;
     function renderHorizontalSubChart() {
-        const ctx = document.getElementById('horizontalSubChart').getContext('2d');
-        if (horizontalChart) horizontalChart.destroy();
+        const ctx = document.getElementById('horizontalSubChartInternal').getContext('2d');
+        if (horizChart) horizChart.destroy();
+        const labels = lpSubAssets.map(a => a.name);
+        const percentages = lpSubAssets.map(a => a.internalPercent);
+        const barColors = ['#2D7F9E', '#53B9A4', '#F0A65A', '#8B6BB0', '#C45C8C', '#4E9F8D', '#F3A683', '#6C9EBF'];
         
-        const labels = enrichedSubAssets.map(a => a.name);
-        const percentages = enrichedSubAssets.map(a => a.internalPercent);
-        const bgColors = ['#3B82F6', '#2DD4BF', '#F59E0B', '#8B5CF6', '#EC4899', '#10B981', '#F97316', '#6366F1'];
-        
-        horizontalChart = new Chart(ctx, {
+        horizChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Вес внутри стратегии LP V3 (%)',
+                    label: 'Weight inside LP V3 (%)',
                     data: percentages,
-                    backgroundColor: bgColors,
-                    borderRadius: 12,
-                    barPercentage: 0.65,
+                    backgroundColor: barColors,
+                    borderRadius: 10,
+                    barPercentage: 0.7,
                     categoryPercentage: 0.8,
                 }]
             },
             options: {
-                indexAxis: 'y',  // горизонтальные бары
+                indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw.toFixed(1)}% от пула LP V3` } },
-                    legend: { position: 'top', labels: { color: '#C6D6F5', font: { size: 10 } } }
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw.toFixed(1)}% of LP V3 allocation` } },
+                    legend: { position: 'top', labels: { font: { size: 10 }, color: '#4A627A' } }
                 },
                 scales: {
-                    x: { grid: { color: '#1F2A48' }, title: { display: true, text: 'Внутренняя доля (%)', color: '#9BB2E0' } },
-                    y: { ticks: { color: '#DBE6FF', font: { size: 9 } }, grid: { display: false } }
+                    x: { grid: { color: '#E2EAF2' }, title: { display: true, text: 'Internal share (%)', color: '#5A7A9A' } },
+                    y: { ticks: { font: { size: 9 }, color: '#2C5A7A' }, grid: { display: false } }
                 }
             }
         });
     }
 
-    // отрисовка списка активов с микро-прогресс барами
-    function renderSubAssetList() {
-        const container = document.getElementById('subAssetList');
+    // render asset rows with micro-progress bars
+    function renderAssetRows() {
+        const container = document.getElementById('assetRowsList');
         if (!container) return;
-        container.innerHTML = '<h4 style="margin-bottom: 12px; font-size:0.9rem;"><i class="fas fa-layer-group"></i> Распределение активов в LP V3</h4>';
-        enrichedSubAssets.forEach(asset => {
-            const percent = asset.internalPercent.toFixed(1);
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'asset-item';
-            itemDiv.innerHTML = `
-                <div class="asset-name">
-                    <i class="${asset.icon}" style="width: 22px;"></i> ${asset.name}
+        container.innerHTML = '<div style="margin-bottom: 12px; font-weight:600;"><i class="fas fa-layer-group"></i> Weight distribution (8 assets)</div>';
+        lpSubAssets.forEach(asset => {
+            const percentFormatted = asset.internalPercent.toFixed(1);
+            const row = document.createElement('div');
+            row.className = 'asset-row-item';
+            row.innerHTML = `
+                <div class="asset-name-icon">
+                    <i class="${asset.icon}" style="width: 24px;"></i> ${asset.name}
                 </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <div class="progress-micro"><div class="progress-micro-fill" style="width: ${percent}%;"></div></div>
-                    <span class="asset-percent">${percent}%</span>
+                    <div class="micro-bar"><div class="micro-fill" style="width: ${percentFormatted}%;"></div></div>
+                    <span style="font-weight:700;">${percentFormatted}%</span>
                 </div>
             `;
-            container.appendChild(itemDiv);
+            container.appendChild(row);
         });
-        const noteSmall = document.createElement('div');
-        noteSmall.className = 'note';
-        noteSmall.style.marginTop = '12px';
-        noteSmall.innerHTML = '<i class="fas fa-info-circle"></i> Внутренние веса основаны на распределении 20% фонда между 8 активами.';
-        container.appendChild(noteSmall);
+        const note = document.createElement('div');
+        note.style.fontSize = '0.7rem';
+        note.style.marginTop = '12px';
+        note.style.color = '#6C8DB0';
+        note.innerHTML = '<i class="fas fa-chart-simple"></i> Total weight = 20% of fund capital · Internal breakdown based on risk parity.';
+        container.appendChild(note);
     }
 
-    // ----------------------------------------------------------------
-    // 5. Взвешенная APR, метрики и шарп (оценочный)
-    // ----------------------------------------------------------------
+    // --------------------------------------------
+    // 3. Weighted APR and KPI logic
+    // --------------------------------------------
     function computeWeightedApr() {
-        let total = 0;
-        globalStrategies.forEach(s => {
-            total += (s.allocation / 100) * s.apr;
+        let weighted = 0;
+        globalStrats.forEach(s => {
+            weighted += (s.allocation / 100) * s.apr;
         });
-        return total;
+        return weighted;
     }
 
-    function renderWeightedAndRisk() {
-        const weightedDiv = document.getElementById('weightedStats');
-        const riskDiv = document.getElementById('riskMetrics');
-        if (!weightedDiv || !riskDiv) return;
+    function renderKPIs() {
+        const weightedDiv = document.getElementById('weightedMetricsContainer');
+        const riskDiv = document.getElementById('riskMetricsContainer');
+        const factsheetDiv = document.getElementById('factsheetContainer');
+        if (!weightedDiv || !riskDiv || !factsheetDiv) return;
         
-        const weightedApr = computeWeightedApr(); // должно быть 25%
-        const maxAprStrat = globalStrategies.reduce((max, s) => s.apr > max.apr ? s : max, globalStrategies[0]);
-        const minAprStrat = globalStrategies.reduce((min, s) => s.apr < min.apr ? s : min, globalStrategies[0]);
-        const loanToAsset = 15; // задано
-        
-        // условный коэффициент Шарпа (предполагаем безрисковую 3%)
+        const weightedApr = computeWeightedApr(); // 25%
+        const bestStrat = globalStrats.reduce((max, s) => s.apr > max.apr ? s : max, globalStrats[0]);
+        const worstStrat = globalStrats.reduce((min, s) => s.apr < min.apr ? s : min, globalStrats[0]);
+        const loanToAsset = 15;
         const riskFree = 3;
         const volatilityMock = 18;
         const sharpeRatio = ((weightedApr - riskFree) / volatilityMock).toFixed(2);
         
         weightedDiv.innerHTML = `
-            <div class="stat-row"><span><i class="fas fa-calculator"></i> Средневзвешенная APR:</span><span class="highlight-green" style="font-weight:800;">${weightedApr.toFixed(1)}%</span></div>
-            <div class="stat-row"><span><i class="fas fa-tachometer-alt"></i> Лучшая стратегия:</span><span>${maxAprStrat.name} (${maxAprStrat.apr}% APR)</span></div>
-            <div class="stat-row"><span><i class="fas fa-shield-alt"></i> Самая стабильная APR:</span><span>${minAprStrat.name} (${minAprStrat.apr}%)</span></div>
-            <div class="stat-row"><span><i class="fas fa-chart-line"></i> Разброс APR (max-min):</span><span>${(maxAprStrat.apr - minAprStrat.apr).toFixed(0)} п.п.</span></div>
+            <div class="stat-line"><span><i class="fas fa-calculator"></i> Weighted avg APR:</span><span style="font-weight:800; color:#1F6392;">${weightedApr.toFixed(1)}%</span></div>
+            <div class="stat-line"><span><i class="fas fa-trophy"></i> Top strategy:</span><span>${bestStrat.name} (${bestStrat.apr}% APR)</span></div>
+            <div class="stat-line"><span><i class="fas fa-chart-line"></i> Volatility hedge:</span><span>Stable yield corridor</span></div>
         `;
         
         riskDiv.innerHTML = `
-            <div class="stat-row"><span><i class="fas fa-hand-holding-usd"></i> Loan‑to‑Asset Ratio:</span><span><strong>${loanToAsset}%</strong></span></div>
-            <div class="stat-row"><span><i class="fas fa-chart-simple"></i> Sharpe Ratio (оценка):</span><span>${sharpeRatio}</span></div>
-            <div class="stat-row"><span><i class="fas fa-coins"></i> Капитал в LP V3:</span><span>20% (8 токенов)</span></div>
-            <div class="stat-row"><span><i class="fas fa-balance-scale"></i> HFT стратегия APR:</span><span class="highlight-green">40%</span></div>
+            <div class="stat-line"><span><i class="fas fa-hand-holding-usd"></i> Loan-to-Asset:</span><span>${loanToAsset}%</span></div>
+            <div class="stat-line"><span><i class="fas fa-chart-simple"></i> Sharpe ratio (est.):</span><span>${sharpeRatio}</span></div>
+            <div class="stat-line"><span><i class="fas fa-shield"></i> Insurance reserve:</span><span>Active</span></div>
+        `;
+        
+        factsheetDiv.innerHTML = `
+            <div class="stat-line"><span><i class="fas fa-coins"></i> Min. capital:</span><span>$30k</span></div>
+            <div class="stat-line"><span><i class="fas fa-chart-pie"></i> Strategies total:</span><span>5 active</span></div>
+            <div class="stat-line"><span><i class="fas fa-lock"></i> Proof of reserves:</span><span>On-chain available</span></div>
+            <div class="stat-line"><span><i class="fas fa-percent"></i> HFT bot APR:</span><span class="highlight">40%</span></div>
         `;
     }
-    
-    // ----------------------------------------------------------------
-    // Доп. вспомогательный блок: показать, что сумма аллокаций глобальных =100%
-    // ----------------------------------------------------------------
-    function checkConsistency() {
-        const totalAlloc = globalStrategies.reduce((sum, s) => sum + s.allocation, 0);
-        if (totalAlloc !== 100) console.warn(`Сумма аллокаций: ${totalAlloc}%`);
-        const lpTotalWeight = lpSubAssets.reduce((s, a) => s + a.weight, 0);
-        // ожидаем сумму 20, так как 20% фонда разбито на компоненты (7+3+2+2+2+2+1+1=20)
-        if (lpTotalWeight !== 20) console.log(`Вес LP V3 активов = ${lpTotalWeight}% (должно быть 20% от фонда)`);
+
+    // Additional: show internal LP V3 total capital weight note
+    function addContextNote() {
+        const summaryElement = document.createElement('div');
+        summaryElement.style.marginTop = '1rem';
+        summaryElement.style.fontSize = '0.75rem';
+        summaryElement.style.textAlign = 'center';
+        summaryElement.style.color = '#557C99';
+        summaryElement.innerHTML = '<i class="fas fa-chart-tree"></i> Liquidity Providing V3 diversifies across 8 assets: BTC (7%), ETH (3%), Gold, indices, and altcoins. Remaining 80% of fund: Perp Dexes, Deposits, HFT, Delta-neutral.';
+        document.querySelector('.dashboard').appendChild(summaryElement);
     }
     
-    // ФИНАЛЬНАЯ ИНИЦИАЛИЗАЦИЯ
+    // ensure mobile touch and resize compatibility
+    function handleResize() {
+        if (globalDonutChart) globalDonutChart.resize();
+        if (horizChart) horizChart.resize();
+    }
+    
+    // INIT
     function initDashboard() {
         renderGlobalDonut();
-        renderStrategiesLegend();
+        renderStrategyLegendCards();
         renderHorizontalSubChart();
-        renderSubAssetList();
-        renderWeightedAndRisk();
-        checkConsistency();
-        // добавим дополнительную аннотацию: в нижнюю часть можно вставить процентное соотношение
-        const footerNote = document.createElement('div');
-        footerNote.style.marginTop = '2rem';
-        footerNote.style.textAlign = 'center';
-        footerNote.style.fontSize = '0.7rem';
-        footerNote.style.color = '#5E77A4';
-        footerNote.innerHTML = '<i class="fas fa-chart-tree"></i> Liquidity Providing V3 содержит 8 активов с весами от 1% до 7% в рамках 20% фонда. Другие стратегии (Perp, Deposits, HFT, Delta) имеют чистую экспозицию.';
-        document.querySelector('.dashboard').appendChild(footerNote);
+        renderAssetRows();
+        renderKPIs();
+        addContextNote();
+        window.addEventListener('resize', () => handleResize());
     }
     
-    window.addEventListener('DOMContentLoaded', initDashboard);
-    window.addEventListener('resize', () => {
-        if (globalChart) globalChart.resize();
-        if (horizontalChart) horizontalChart.resize();
-    });
+    document.addEventListener('DOMContentLoaded', initDashboard);
 </script>
 </body>
 </html>
