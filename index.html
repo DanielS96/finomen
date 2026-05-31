@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>FINØMEN | Hedge Fund — Capital Allocation Dashboard</title>
-    <!-- Google Fonts + Font Awesome 6 -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * {
@@ -113,8 +111,8 @@
             font-size: 1.2rem;
         }
 
-        /* Two column layout for global allocation */
-        .split-layout {
+        /* Global allocation: on desktop side-by-side, on mobile stacked with centered chart */
+        .global-layout {
             display: flex;
             flex-wrap: wrap;
             gap: 1.5rem;
@@ -131,6 +129,29 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 0.8rem;
+        }
+
+        /* On mobile: chart centered, legend below */
+        @media (max-width: 680px) {
+            .global-layout {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+            .chart-area {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            .chart-area canvas {
+                max-width: 260px;
+                margin: 0 auto;
+                display: block;
+            }
+            .legend-stats-grid {
+                width: 100%;
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
         }
 
         .strat-mini-card {
@@ -345,21 +366,17 @@
                 margin-bottom: 1rem;
             }
             
-            .split-layout {
-                gap: 1rem;
-            }
-            
-            .legend-stats-grid {
-                grid-template-columns: 1fr;
-                gap: 0.6rem;
-            }
-            
-            .strat-mini-card {
-                padding: 0.6rem 0.8rem;
-            }
-            
             .internal-wrapper {
                 gap: 1rem;
+                flex-direction: column;
+            }
+            
+            .hbar-container {
+                width: 100%;
+            }
+            
+            .hbar-container canvas {
+                max-height: 200px;
             }
             
             .asset-rows {
@@ -414,14 +431,6 @@
             .stat-line {
                 font-size: 0.75rem;
             }
-            
-            .chart-area canvas {
-                max-height: 180px;
-            }
-            
-            .hbar-container canvas {
-                max-height: 180px;
-            }
         }
 
         /* For very small devices */
@@ -452,13 +461,13 @@
         </div>
     </div>
 
-    <!-- GLOBAL ALLOCATION -->
+    <!-- GLOBAL ALLOCATION - теперь на мобильных круговая сверху по центру, стратегии снизу -->
     <div class="section-card">
         <div class="section-title">
             <i class="fas fa-chart-pie"></i> 
             <span>Global capital allocation · Active strategies</span>
         </div>
-        <div class="split-layout">
+        <div class="global-layout">
             <div class="chart-area">
                 <canvas id="globalDonutCanvas" width="400" height="220" style="max-height: 220px;"></canvas>
                 <div class="footnote" style="margin-top: 6px;">% of total fund capital per strategy</div>
@@ -514,15 +523,15 @@
     ];
 
     // LP V3 internal assets (updated weights: BTC 6%, ETH 4%, XAUT 2%, SP500 2%, QQQ 2%, Stocks 2%, SOL 1%, BNB 1%)
-    // Fixed icons: QQQ -> chart-line, SOL -> bolt (since fab fa-solana sometimes fails, using solid icon)
+    // Fixed icons: QQQ -> chart-line (fas fa-chart-line), SOL -> bolt (fas fa-bolt)
     const lpSubAssetsRaw = [
         { name: "Bitcoin (BTC)",    weight: 6, icon: "fab fa-bitcoin" },
         { name: "Ethereum (ETH)",   weight: 4, icon: "fab fa-ethereum" },
         { name: "XAUT (Gold)",      weight: 2, icon: "fas fa-coins" },
         { name: "S&P 500",          weight: 2, icon: "fas fa-chart-line" },
-        { name: "QQQ (NASDAQ)",     weight: 2, icon: "fas fa-chart-simple" },
+        { name: "QQQ (NASDAQ)",     weight: 2, icon: "fas fa-chart-line" },      // ✅ fixed: changed to working icon
         { name: "Global Stocks",    weight: 2, icon: "fas fa-building" },
-        { name: "Solana (SOL)",     weight: 1, icon: "fas fa-bolt" },
+        { name: "Solana (SOL)",     weight: 1, icon: "fas fa-bolt" },            // ✅ fixed: changed to bolt
         { name: "BNB",              weight: 1, icon: "fas fa-crown" }
     ];
     const totalLpWeight = lpSubAssetsRaw.reduce((s, a) => s + a.weight, 0); // = 20
